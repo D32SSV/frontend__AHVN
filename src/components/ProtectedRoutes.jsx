@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../authContext/AuthContext";
 const ProtectedRoute = ({ children, redirectTo }) => {
-  const { token, role } = useAuth();
+  const { token, user } = useAuth();
 
   const isAuthenticated = Boolean(token);
-  const isPermitted = role === "admin";
+  const isPermitted = user.role === "admin" || user.role === "super_user";
   if (!isAuthenticated) {
     return <Navigate to={"/"} replace />;
   } else if (!isPermitted) {

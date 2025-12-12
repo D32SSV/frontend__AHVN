@@ -9,11 +9,11 @@ const Login = () => {
     email: "",
     password: "",
   };
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialFormData);
   const [err, setErr] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { saveToken, token, saveRole } = useAuth();
-  const navigate = useNavigate();
+  const { saveToken, token, saveUser } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,9 +30,9 @@ const Login = () => {
         setErr("");
       }
       setIsLoading(!true);
-      const { token, user, data } = response;
+      const { token, data } = response;
       saveToken(token);
-      saveRole(data.role);
+      saveUser(data);
       console.log("JAI SHRI RAMMMMMM", response);
     } catch (error) {
       setFormData(initialFormData);
@@ -49,7 +49,7 @@ const Login = () => {
   }, [token]);
 
   return (
-    <div className="flex items-center justify-center h-screen capitalize">
+    <div className="flex items-center justify-center h-screen capitalize bg-black">
       <form
         onSubmit={handleLogin}
         className="flex items-center justify-center flex-col gap-4"

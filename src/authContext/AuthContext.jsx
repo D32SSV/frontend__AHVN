@@ -4,10 +4,10 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
-  const [role, setRole] = useState(null);
+  const [user, setUser] = useState(null);
 
-  const saveRole = (role) => {
-    setRole(role);
+  const saveUser = (user) => {
+    setUser(user);
   };
   const saveToken = (newToken) => {
     setToken(newToken);
@@ -15,11 +15,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setToken(null);
-    setRole(null);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, role, saveToken, saveRole, logout }}>
+    <AuthContext.Provider value={{ token, user, saveToken, saveUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

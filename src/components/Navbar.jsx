@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authContext/AuthContext";
 
 const routes = [
   { name: "Home", link: "/" },
   { name: "Dashboard", link: "/dashboard" },
-  { name: "Admin", link: "/admin" },
   { name: "Contact", link: "/contact" },
   { name: "Register", link: "/register" },
+  { name: "Login", link: "/admin" },
+  { name: "Logout", link: "/logout" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { logout, token } = useAuth();
 
   useEffect(() => {
     const handleEsc = (e) => e.key === "Escape" && setOpen(false);
@@ -40,6 +43,11 @@ export default function Navbar() {
               <li
                 key={index}
                 onClick={() => {
+                  if (route.name === "Logout") {
+                    logout();
+                    navigate("/admin");
+                    return;
+                  }
                   navigate(route.link);
                   setOpen(false);
                 }}
@@ -80,6 +88,11 @@ export default function Navbar() {
             <li
               key={index}
               onClick={() => {
+                if (route.name === "Logout") {
+                  logout();
+                  navigate("/admin");
+                  return;
+                }
                 navigate(route.link);
                 setOpen(false);
               }}

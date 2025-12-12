@@ -4,7 +4,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Navbar />
-      <main className="mt-8"> {/* adjusted based on navbar height */}
+      <main className="bg-amber-50 h-[calc(100vh)]"> {/* adjusted based on navbar height */}
         {children}
       </main>
     </>
