@@ -58,10 +58,13 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-green-800 w-screen">
+    <div className="bg-green-300 w-screen">
       <Search value={search} setSearch={setSearch} />
       <div>
-        <button onClick={() => navigate("/dashboard/field")}>
+        <button
+          className="bg-gray-200 text-white"
+          onClick={() => navigate("/dashboard/field")}
+        >
           Manage Custom Fields
         </button>
       </div>
@@ -75,13 +78,12 @@ const Dashboard = () => {
         member={selectedMember}
         handleEdit={handleEditMember}
       />
-      {isEditOpen.view && (
-        <EditMember
-          isOpen={isEditOpen.view}
-          onClose={() => setIsEditOpen({ view: false, member: null })}
-          member={isEditOpen.member}
-        />
-      )}
+
+      <EditMember
+        isOpen={isEditOpen.view}
+        onClose={() => setIsEditOpen({ view: false, member: null })}
+        member={isEditOpen.member}
+      />
     </div>
   );
 };
