@@ -3,9 +3,9 @@ import { useAuth } from "../../authContext/AuthContext";
 import Loader from "../Loader";
 import { getCustomFields } from "../../api/CustomField";
 import ExtraFields from "../ExtraFields";
-import { editMember } from "../../api/Member";
+import { deleteMember, editMember } from "../../api/Member";
 
-const EditMember = ({ isOpen, onClose, member, onUpdate }) => {
+const EditMember = ({ isOpen, onClose, member, onUpdate, onDelete }) => {
   const { token, user } = useAuth();
 
   const initialFormData = {
@@ -67,6 +67,28 @@ const EditMember = ({ isOpen, onClose, member, onUpdate }) => {
     } catch (error) {
       console.error("Error creating member:", error.message);
       setErr(error.message || "Failed to add member. Please try again.");
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      setIsLoading(true);
+      const response = await deleteMember(token, user._id, formData._id);
+      if (response.success) {
+        onDelete(formData._id);
+        setFormData(initialFormData);
+        setErr("");
+        onClose();
+        setIsLoading(false);
+      } else {
+        console.error("API did not return a valid member object");
+      }
+    } catch (error) {
+      console.error("Error deleting member:", error.message);
+      setErr(error.message || "Failed to delete member. Please try again.");
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -250,10 +272,15 @@ const EditMember = ({ isOpen, onClose, member, onUpdate }) => {
                 required
                 autoComplete="off"
                 name="dateOfBirth"
-                value={formData["dateOfBirth"]}
+                value={
+                  formData.dateOfBirth
+                    ? new Date(formData.dateOfBirth).toISOString().split("T")[0]
+                    : ""
+                }
                 onChange={handleChange}
                 className="inputCls"
                 placeholder="Enter dateOfBirth"
+                type="date"
               />
             </div>
             <div className="flex items-start justify-between gap-12 resp whitespace-nowrap">
@@ -461,6 +488,14 @@ const EditMember = ({ isOpen, onClose, member, onUpdate }) => {
               type="button"
             >
               Close
+            </button>
+            <button
+              className="text-red-500 bg-red-700"
+              title="Delete Member"
+              onClick={() => handleDelete()}
+              type="button"
+            >
+              Delete Member
             </button>
           </div>
         </form>

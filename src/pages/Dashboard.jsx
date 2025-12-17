@@ -26,9 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        console.log("USER", user);
         const response = await getAllMembers(token, user._id);
-        console.log("MEMBERAS", response.data);
         if (response.success) setMembers(response.data);
       } catch (error) {
         console.error("Error fetching members:", error.message);
@@ -57,6 +55,15 @@ const Dashboard = () => {
     setIsEditOpen({ view: true, member: currentMember });
   };
 
+  const handleMemberUpdate = (updatedMember) => {
+    setMembers((prev) =>
+      prev.map((m) => (m._id === updatedMember._id ? updatedMember : m))
+    );
+  };
+
+  const handleMemberDelete = (deletedMemberId) => {
+    setMembers((prev) => prev.filter((m) => m._id !== deletedMemberId));
+  };
   return (
     <div className="bg-green-300 w-screen">
       <Search value={search} setSearch={setSearch} />
@@ -83,6 +90,8 @@ const Dashboard = () => {
         isOpen={isEditOpen.view}
         onClose={() => setIsEditOpen({ view: false, member: null })}
         member={isEditOpen.member}
+        onUpdate={handleMemberUpdate}
+        onDelete={handleMemberDelete}
       />
     </div>
   );
