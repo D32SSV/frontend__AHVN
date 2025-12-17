@@ -52,7 +52,7 @@ const Login = () => {
     <div className="flex items-center justify-center h-screen capitalize bg-black">
       <form
         onSubmit={handleLogin}
-        className="flex items-center justify-center flex-col gap-4"
+        className="flex items-center justify-center flex-col gap-4 text-gray-500"
       >
         {/* <div className="flex">
           <label htmlFor="role">Select Role: </label>
@@ -77,7 +77,7 @@ const Login = () => {
           <label htmlFor="email">email: </label>
           <input
             value={formData.email}
-            className="border rounded-md p-1"
+            className="border rounded-md p-1 bg-gray-400"
             placeholder="Email"
             type="text"
             name="email"
@@ -89,7 +89,7 @@ const Login = () => {
           <label htmlFor="password">password: </label>
           <input
             value={formData.password}
-            className="border rounded-md p-1"
+            className="border rounded-md p-1 bg-gray-400"
             placeholder="Password"
             type="password"
             name="password"
