@@ -46,7 +46,7 @@ export const registerMember = async (formdata) => {
     const response = await axios.post(`${BASE_URL}/form/members`, formdata, {
       headers: { "Content-Type": "application/json" },
     });
-    if (response.status === 200) {
+    if (response.data.success) {
       return response.data;
     } else {
       throw new Error("Could not register member");
