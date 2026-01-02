@@ -167,6 +167,7 @@ export default function StepTwo({
             name="volunteerPrograms"
             value={formData.volunteerPrograms}
             onChange={handleChange}
+            placeholder="Enter with comma if more than one"
           />
           {Array.isArray(exFields) && exFields.length > 0 && (
             <div className="flex flex-col items-start">
